@@ -1,0 +1,49 @@
+# Recipe for version 5.2.12 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Jan 6 03:51:43 BRST 2010
+### PHP 5.2.12
+# GoboLinux Recipe created by Taeber Rapczak <taeber@rapczak.com>
+# June 14, 2004
+
+### Compile Version
+compile_version=1.8.0
+
+### Download Section
+url="http://www.php.net/distributions/php-5.2.12.tar.bz2"
+file_size=9075161
+file_md5=5b7077e366c7eeab34da31dd860a1923
+mirror_urls=(
+	"http://www.php.net/get/php-5.2.12.tar.bz2/from/us2.php.net/mirror"
+	"http://www.php.net/get/php-5.2.12.tar.bz2/from/us4.php.net/mirror"
+)
+
+### File Information
+file="php-5.2.12.tar.bz2"
+
+### Compilation Variables
+recipe_type=configure
+
+configure_options=(
+  "--enable-force-cgi-redirect"        # Enable security check for internal server redirects
+   "--enable-discard-path"                      # with this enabled the PHP CGI binary can safely be placed
+                                                        # outside of the web tree and people will not be able to
+                                                        # circumvent .htaccess security
+   "--enable-magic-quotes"
+   "--enable-ftp"
+   "--with-libxml-dir=$libxml2_path"
+   "--with-openssl"
+   "--with-zlib=$zlib_path"
+   "--with-bz2=$bzip2_path"
+   "--with-png-dir=$libpng_path"
+   "--with-pdo-sqlite=$sqlite_path"
+   "--enable-mbstring"
+   "--enable-soap"
+   "--enable-bcmath"
+   "--with-gd"
+)
+
+with_mysql=(
+        "--with-mysql=$mysql_path"
+        "--with-mysqli=$mysql_path/bin/mysql_config"
+        "--with-pdo-mysql=$mysql_path"
+)
+
+with_openldap="--with-ldap=$openldap_path"

@@ -1,0 +1,11 @@
+Bzip2
+Glibc 2.3.2
+JPEG >= 6b
+MySQL [mysql]
+LibPNG >= 1.2.16
+LibXML2 2.6.16
+LibXSLT >= 1.1.0
+OpenLDAP [openldap]
+OpenSSL 0.9.7
+SQLite
+ZLib
