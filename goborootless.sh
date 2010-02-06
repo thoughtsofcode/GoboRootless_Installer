@@ -184,22 +184,10 @@ source '$install_folder/Programs/Rootless/Current/bin/StartRootless'" >> ~/.bash
 
 install_programs()
 {
-    # Utilities
-    Compile --batch Zip
-    Compile --batch Unzip
-    Compile --batch Rsync
-    Compile --batch Tree
-    
-    # LAMP
-    Compile --batch HTTPD
-    Compile --batch MySQL
-    Compile --batch Mod_PHP
-    Compile --batch PHP
-    
-    # Version control
-    Compile --batch Git
-    Compile --batch Mercurial
-    Compile --batch Subversion
+    for program in "${programs[@]}"
+    do
+        Compile --batch "$program"
+    done
     
     return 0
 }
@@ -288,6 +276,9 @@ log_error()
 #################
 
 handle_errors
+
+# Read in the configuration file located in the same folder as this script
+source "$(dirname "$(readlink --canonicalize-existing --no-newline "$0")")/goborootless.configuration"
 
 while getopts 'hi:r:' option
 do
