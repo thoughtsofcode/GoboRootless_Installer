@@ -1,0 +1,9 @@
+GoboRootless Installer simplifies the process of getting a GoboRootless installation up and running on your Mac or Linux machine (currently Mac OS X 10.5 Leopard and Ubuntu 9.10 Karmic Koala have been tested).
+
+The first step is to copy the goborootless.configuration.template file to a file named goborootless.configuration residing in the same folder as the goborootless.sh script. You can customize the programs to be installed by editing the goborootless.configuration file. You can view the list of available programs at http://recipes.gobolinux.org/r/.
+
+The next step is to cd to the folder where you want to install GoboRootless (the installer will create a folder called "GoboRootless" inside this folder) and execute goborootless.sh. Alternatively, you can pass the -i <install folder> option to install GoboRootless inside a specific folder.
+
+You can override the default GoboLinux recipes by passing the -r <recipes folder> option. The recipes folder should contain your custom recipes.
+
+Passing the -h option will print a brief help message containing a summary of the available options.
