@@ -278,7 +278,7 @@ log_error()
 handle_errors
 
 # Read in the configuration file located in the same folder as this script
-source "$(dirname "$(readlink --canonicalize-existing --no-newline "$0")")/goborootless.configuration"
+source "$(dirname "$(readlink --canonicalize-existing --no-newline "$0")")/configuration.sh"
 
 while getopts 'hi:r:' option
 do
