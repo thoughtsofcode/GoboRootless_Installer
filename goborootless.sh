@@ -18,8 +18,8 @@ install_on_mac_os_x()
     # Sanity check
     is_mac_os_x || log_error "$FUNCNAME() can only be called on a Mac OS X system." "$LINENO" "$FUNCNAME"
     
-    # We require MacPorts to bootstrap our Rootless installation
-    program_exists 'port' || log_error 'Please install MacPorts (http://www.macports.org/install.php) before installing Rootless.'
+    # We require MacPorts to bootstrap our GoboRootless installation
+    program_exists 'port' || log_error 'Please install MacPorts (http://www.macports.org/install.php) before installing GoboRootless.'
     
     # GoboLinux prerequisites. The +with_default_names part is needed so that the executables are accessible without the g prefix, otherwise for example, ls would be gls.
     sudo port selfupdate
@@ -61,7 +61,7 @@ install_on_ubuntu()
 GCC'
     post_process_install
     
-    # According to http://gobo.kundor.org/wiki/Rootless_on_Debian/Ubuntu, Ubuntu defaults to mawk instead of gawk. This difference can cause seemingly arbitrary and deeply embedded errors. We Compile Gawk within Rootless as a workaround.
+    # According to http://gobo.kundor.org/wiki/Rootless_on_Debian/Ubuntu, Ubuntu defaults to mawk instead of gawk. This difference can cause seemingly arbitrary and deeply embedded errors. We Compile Gawk within GoboRootless as a workaround.
     Compile --batch Gawk
     
     install_programs
@@ -72,7 +72,7 @@ GCC'
 
 install_goborootless()
 {
-    # Create the Rootless install folder
+    # Create the GoboRootless install folder
     sudo mkdir -p "$install_folder"
     sudo chown "$USER":"$(id --group --name)" "$install_folder"
     
@@ -88,14 +88,14 @@ install_goborootless()
     expect -c '
         set timeout 40
         spawn '"$HOME"'/CreateRootlessEnvironment '"$install_folder"'
-        expect_after timeout {send_user "Rootless installation failed.\n"; exit 1}
+        expect_after timeout {send_user "GoboRootless installation failed.\n"; exit 1}
         expect {
             -ex {Press Enter to continue or Ctrl+C to abort.} {send "\r"; exp_continue}
             -ex {Recompile binaries for your system? [Y/n]} {send "y\r"; exp_continue}
             -re {1 mod: Settings/Scripts/Dependencies\.blacklist.*\[A\]uto-merge/\[V\]iew/\[U\]se new/\[S\]kip/\[L\]ist/\[M\]erge and edit/\[SA\]Skip all} {send "u\r"; exp_continue}
             -re {2 mod: Settings/bashrc.*\[A\]uto-merge/\[V\]iew/\[U\]se new/\[S\]kip/\[L\]ist/\[M\]erge and edit/\[SA\]Skip all} {send "u\r"; exp_continue}
             -re {~/\.(?:profile|bash_profile|zshrc|xprofile)\? \[Y/n\]} {send "n\r"; exp_continue}
-            eof {send_user "Finished installing Rootless.\n"}
+            eof {send_user "Finished installing GoboRootless.\n"}
         }
     '
     
@@ -122,15 +122,15 @@ post_process_install()
     # Comment out default aliases
     sed -i "s:\(alias .*=\):#\1:" "$install_folder"/Programs/Scripts/Settings/bashrc
     
-    # Start Rootless automatically when beginning a shell session
+    # Start GoboRootless automatically when beginning a shell session
     if ! grep "source '$install_folder/Programs/Rootless/Current/bin/StartRootless'" ~/.bashrc > /dev/null
     then
         echo "
-# Start Gobo Rootless
+# Start GoboRootless
 source '$install_folder/Programs/Rootless/Current/bin/StartRootless'" >> ~/.bashrc
     fi
     
-    # Start Rootless in the current session
+    # Start GoboRootless in the current session
     source "$install_folder"/Programs/Rootless/Current/bin/StartRootless
     
     # Install Compile. We don't want any dependencies because we are building everything from source.
