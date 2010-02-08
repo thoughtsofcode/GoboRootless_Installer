@@ -277,13 +277,11 @@ log_error()
 
 handle_errors
 
-# Read in the configuration file located in the same folder as this script
-source "$(dirname "$(readlink --canonicalize-existing --no-newline "$0")")/configuration.sh"
-
-while getopts 'hi:r:' option
+while getopts 'hc:i:r:' option
 do
     case "$option" in
-        h) log_error 'Usage: goborootless.sh [-h] [-i install folder] [-r recipes folder]';;
+        h) log_error 'Usage: goborootless.sh [-h] [-c configuration file] [-i install folder] [-r recipes folder]';;
+        c) configuration_file="$OPTARG";;
         i) install_folder="$OPTARG";;
         r) recipes_folder="$OPTARG";;
     esac
@@ -292,6 +290,9 @@ shift $((OPTIND-1))  # Get rid of the option arguments
 
 # The folder this script is located in
 script_folder="$(dirname "$(readlink --canonicalize-existing --no-newline "$0")")"
+
+# Read in the configuration file. Default to looking for a file named configuration.sh in the same folder as this script if one was not specified.
+source "${configuration_file:-$script_folder/configuration.sh}"
 
 # Set the default install folder if it's not specified
 install_folder="${install_folder:-$PWD/GoboRootless}"
