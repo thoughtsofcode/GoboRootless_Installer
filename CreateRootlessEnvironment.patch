@@ -7,7 +7,7 @@
 -export LD_LIBRARY_PATH="${goboPrefix}/System/Links/Libraries${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
 +export LD_RUN_PATH="${goboPrefix}/System/Links/Libraries${LD_RUN_PATH:+:$LD_RUN_PATH}"
 +export CPPFLAGS="-I${goboPrefix}/System/Links/Headers${CPPFLAGS:+$CPPFLAGS}"
-+export LDFLAGS="-L${goboPrefix}/System/Links/Libraries${LDFLAGS:+$LDFLAGS}"
++export LDFLAGS="-L${goboPrefix}/System/Links/Libraries -Wl,-rpath,${goboPrefix}/System/Links/Libraries${LDFLAGS:+$LDFLAGS}"
  
  if [ "`uname -s`" = "Darwin" ]
  then
